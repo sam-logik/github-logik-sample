@@ -1,0 +1,19 @@
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    # run every hour
+    - cron:  '0 * * * *'
+jobs: 
+ pull_bp: 
+   runs-on: ubuntu-latest 
+   steps: 
+     - name: Branch 
+       uses: actions/checkout@v3 
+     - name: whereAmI 
+       run: ls 
+     - name: zip 
+       run: zip -r -q Archive.zip blueprints fields rules blueprint.yaml 
+     - name: whereAmI1 
+       run: ls 
+     - name: runUpload 
+       run: python upload.py
