@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       NAME:
-        description: "Blueprint Variable Name"
+        description: "A random input name for the workflow"
         type: string
 jobs:
   pull_bp:
@@ -22,12 +22,15 @@ jobs:
             https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export
 
       - name: get_job_id
+        id: get_job_id
         run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
-
-      - name: Sleep for 20 seconds
+      - name: generate_export_url
+        id: generate_export_url
+        run: echo "EXPORT_URL=https://sam-dev-demo.dev.logik.io/api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
+      - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: "20s"
+          time: "30s"
 
       - name: download_blueprint
         run: |
@@ -35,7 +38,7 @@ jobs:
             --header="Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}" \
             --compression=auto \
             --output-document=export.zip \
-            https://sam-dev-demo.dev.logik.io/api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}
+            ${{ steps.generate_export_url.outputs.EXPORT_URL }}
 
       - name: extract_blueprint
         run: mkdir temp_extract && unzip export.zip -d temp_extract
