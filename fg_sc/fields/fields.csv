@@ -1,6 +1,6 @@
 field_type,name,variableName,required,description,selectType,minValue,maxValue,stepValue,defaultValue,precision,unitLabel,minLength,maxLength,lastModifiedBy,quantitySelectionLinked,enrichEnabled,defaultType,defaultBomType,defaultParentProduct,defaultUom,defaultPricingProductSellingModelId,defaultPricingStartDate,defaultPricingEndDate
-TextField,FG1-2,fG12,false,,,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,
-TextField,FG3-2,fG32,false,,,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,
+TextField,FG1-2,fG12,true,,,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,
+TextField,FG3-2,fG32,true,,,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,
 TextField,FG2-3,fG23,false,,,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,
 TextField,fg2header_sc,fg2header_sc,false,,,,,,Dynamic 2,,,,,provisioning@logik.io.samdemo,,,,,,,,,
 BooleanField,hidden_sc,hidden_sc,false,,,,,,false,,,,,provisioning@logik.io.samdemo,,,,,,,,,
