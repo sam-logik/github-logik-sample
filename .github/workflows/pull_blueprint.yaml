@@ -2,16 +2,17 @@ on:
   workflow_dispatch:
     inputs:
       NAME:
-        description: "A random input name for the workflow"
+        description: "Blueprint Variable Name"
         type: string
 jobs:
   pull_bp:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: start_export_blueprint
+      - name: Start Export Blueprint
+        id: start_export_blueprint
         run: |
           wget --header="accept: application/json" \
             --header="content-type: application/json" \
@@ -21,18 +22,21 @@ jobs:
             --output-document=exportJob.json \
             ${{ vars.LOGIK_SOURCE_URL }}api/admin/v1/bulk/blueprints/export
 
-      - name: get_job_id
+      - name: Get Job Id
         id: get_job_id
         run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
-      - name: generate_export_url
+      - name: Generate Export URL
         id: generate_export_url
         run: echo "EXPORT_URL=${{ vars.LOGIK_SOURCE_URL }}api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
+     
       - name: Sleep for 30 seconds
+        id: sleep
         uses: jakejarvis/wait-action@master
         with:
           time: "30s"
 
-      - name: download_blueprint
+      - name: Download Blueprint
+        id: download_blueprint
         run: |
           wget --header="accept: application/octet-stream" \
             --header="Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}" \
@@ -40,14 +44,15 @@ jobs:
             --output-document=export.zip \
             ${{ steps.generate_export_url.outputs.EXPORT_URL }}
 
-      - name: extract_blueprint
-        run: mkdir temp_extract && unzip export.zip -d temp_extract
+      - name: Extract Blueprint
+        id: extract_blueprint
+        run: mkdir ${{ github.event.inputs.NAME }} && unzip export.zip -d ${{ github.event.inputs.NAME }}
 
-      - name: upload_commit
+      - name: Add and Commit
+        id: add_commit
         uses: EndBug/add-and-commit@v9
         with:
-          add: "temp_extract"
-          message: "blueprint"
+          add: "${{ github.event.inputs.NAME }}"
+          message: "Blueprint ${{ github.event.inputs.NAME }}"
           author_name: Sam Check
           author_email: scheck@logik.io
-          new_branch: ${{ github.event.inputs.NAME }}
