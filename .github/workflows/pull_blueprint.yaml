@@ -9,11 +9,20 @@ jobs:
    steps: 
      - name: Branch 
        uses: actions/checkout@v3 
-     - name: whereAmI 
-       run: ls 
-     - name: zip 
-       run: zip -r -q Archive.zip blueprints fields rules blueprint.yaml 
-     - name: whereAmI1 
-       run: ls 
-     - name: runUpload 
-       run: python upload.py
+     - name: start_export_blueprint 
+       run: |
+        curl 'https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export' \
+         -X POST \
+         -H 'accept: application/json' \
+         -H 'content-type: application/json' \
+         -H 'Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API}}'\
+         -d '["pCBuilder"]' \
+         --compressed \
+        | jq .id >> "$GITHUB_OUTPUT"
+
+     - name:  echo_out
+       run: echo {{steps.start_export_blueprint.output}}
+     - name: Sleep for 30 seconds
+       uses: jakejarvis/wait-action@master
+       with:
+         time: '30s'
