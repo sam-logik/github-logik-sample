@@ -51,7 +51,7 @@ jobs:
 
       - name: Extract Blueprint
         id: extract_blueprint
-        run: mkdir -p ${{ github.event.inputs.NAME }} && unzip export.zip -d ${{ github.event.inputs.NAME }}
+        run: mkdir -p ${{ github.event.inputs.NAME }} && unzip -o export.zip -d ${{ github.event.inputs.NAME }}
 
       - name: Add and Commit
         uses: EndBug/add-and-commit@v9
