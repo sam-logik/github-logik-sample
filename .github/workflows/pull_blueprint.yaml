@@ -8,6 +8,10 @@ jobs:
   pull_bp:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Current Time
+        id: now
+        run: echo "NOW=$(date +'%Y-%m-%dT%H.%M.%S')" >> $GITHUB_OUTPUT
+        
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -25,6 +29,7 @@ jobs:
       - name: Get Job Id
         id: get_job_id
         run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
+        
       - name: Generate Export URL
         id: generate_export_url
         run: echo "EXPORT_URL=${{ vars.LOGIK_SOURCE_URL }}api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
@@ -48,11 +53,9 @@ jobs:
         id: extract_blueprint
         run: mkdir ${{ github.event.inputs.NAME }} && unzip export.zip -d ${{ github.event.inputs.NAME }}
 
-      - name: Add and Commit
-        id: add_commit
+      - name: upload_commit
         uses: EndBug/add-and-commit@v9
         with:
           add: "${{ github.event.inputs.NAME }}"
           message: "Blueprint ${{ github.event.inputs.NAME }}"
-          author_name: Sam Check
-          author_email: scheck@logik.io
+          new_branch: "${{ github.event.inputs.NAME }}-${{ steps.now.outputs.NOW}}"
