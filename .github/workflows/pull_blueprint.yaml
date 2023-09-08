@@ -1,3 +1,4 @@
+name: Logik - Pull Blueprint
 on:
   workflow_dispatch:
     inputs:
@@ -5,7 +6,7 @@ on:
         description: "Blueprint Variable Name"
         type: string
 jobs:
-  pull_bp:
+  pull_and_commit_blueprint:
     runs-on: ubuntu-latest
     steps:
       - name: Get Current Time
