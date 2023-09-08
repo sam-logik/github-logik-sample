@@ -1,16 +1,24 @@
 name: Logik Push Blueprint
 on:
-   workflow_dispatch
-jobs: 
- To-Zip: 
-   runs-on: ubuntu-latest 
-   steps: 
+  workflow_dispatch:
+    inputs:
+      NAME:
+        description: "Blueprint Variable Name"
+        type: string
 jobs:
   To-Zip:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v3
-      
-      - name: CreateZip
-        run: zip -r -q archive.zip *
+
+      - name: Create Zip
+        # run: cd ${{ github.event.inputs.NAME }} && zip -r -q ../bp.zip *
+        run: zip -r bp.zip ${{ github.event.inputs.NAME }}
+      - name: Upload Blueprint
+        run: |
+          curl ${{ env.LOGIK_DEST_URL }}api/admin/v2/uploadFile \
+          -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }}' \
+          -F 'jobType=GENERIC_IMPORT' \
+          -F 'file=@bp.zip'
+
