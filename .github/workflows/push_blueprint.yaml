@@ -1,4 +1,4 @@
-name: Logik Push Blueprint
+name: Logik - Push Blueprint
 on:
   workflow_dispatch:
     inputs:
@@ -6,7 +6,7 @@ on:
         description: "Blueprint Variable Name [Folder in repo]"
         type: string
 jobs:
-  To-Zip:
+  zip_and_upload_blueprint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
