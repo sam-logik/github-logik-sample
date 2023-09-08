@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     inputs:
       NAME:
-        description: "A random input name for the workflow"
+        description: "Blueprint Variable Name"
         type: string
 jobs:
   pull_bp:
@@ -13,14 +13,13 @@ jobs:
 
       - name: start_export_blueprint
         run: |
-          curl 'https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export' \
-            -X POST \
-            -H 'accept: application/json' \
-            -H 'content-type: application/json' \
-            -H 'Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}'\
-            -d '["${{ github.event.inputs.NAME }}"]' \
-            --compressed \
-            -o exportJob.json
+          wget --header="accept: application/json" \
+            --header="content-type: application/json" \
+            --header='Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}' \
+            --compression=auto \
+            --post-data='["${{ github.event.inputs.NAME }}"]' \
+            --output-document=exportJob.json \
+            https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export
 
       - name: get_job_id
         run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
