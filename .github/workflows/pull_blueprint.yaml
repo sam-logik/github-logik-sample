@@ -1,28 +1,51 @@
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    # run every hour
-    - cron:  '0 * * * *'
-jobs: 
- pull_bp: 
-   runs-on: ubuntu-latest 
-   steps: 
-     - name: Branch 
-       uses: actions/checkout@v3 
-     - name: start_export_blueprint 
-       run: |
-        curl 'https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export' \
-         -X POST \
-         -H 'accept: application/json' \
-         -H 'content-type: application/json' \
-         -H 'Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API}}'\
-         -d '["pCBuilder"]' \
-         --compressed \
-        | jq .id >> "$GITHUB_OUTPUT"
+  workflow_dispatch:
+    inputs:
+      NAME:
+        description: "A random input name for the workflow"
+        type: string
+jobs:
+  pull_bp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
 
-     - name:  echo_out
-       run: echo {{steps.start_export_blueprint.output}}
-     - name: Sleep for 30 seconds
-       uses: jakejarvis/wait-action@master
-       with:
-         time: '30s'
+      - name: start_export_blueprint
+        run: |
+          curl 'https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export' \
+            -X POST \
+            -H 'accept: application/json' \
+            -H 'content-type: application/json' \
+            -H 'Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}'\
+            -d '["${{ github.event.inputs.NAME }}"]' \
+            --compressed \
+            -o exportJob.json
+
+      - name: get_job_id
+        run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
+
+      - name: Sleep for 20 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "20s"
+
+      - name: download_blueprint
+        run: |
+          wget --header="accept: application/octet-stream" \
+            --header="Authorization: Bearer ${{ secrets.LOGIK_SOURCE_API }}" \
+            --compression=auto \
+            --output-document=export.zip \
+            https://sam-dev-demo.dev.logik.io/api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}
+
+      - name: extract_blueprint
+        run: mkdir temp_extract && unzip export.zip -d temp_extract
+
+      - name: upload_commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "temp_extract"
+          message: "blueprint"
+          author_name: Sam Check
+          author_email: scheck@logik.io
+          new_branch: ${{ github.event.inputs.NAME }}
