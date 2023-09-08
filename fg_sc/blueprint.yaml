@@ -1,0 +1,32 @@
+---
+blueprints:
+- variableName: fg_sc
+  relatedFields:
+  - fg3header_sc
+  - fG13
+  - fG23
+  - fG12
+  - fG11
+  - fG22
+  - fG33
+  - fG32
+  - fG21
+  - fG31
+  - fg1header_sc
+  - hidden_sc
+  - fg2header_sc
+  lastModifiedBy: provisioning@logik.io.samdemo
+  name: fg_sc
+  description: null
+  relatedSets: null
+  scripts: null
+  layouts:
+  - file: /blueprints/fg_sc/layouts/dynFieldGrid.csv
+    name: dynFieldGrid
+    variableName: dynFieldGrid
+  products: null
+productPickers: null
+sets: null
+fieldOptions: /fields/fieldOptions.csv
+rules: /rules/rules.csv
+fields: /fields/fields.csv
