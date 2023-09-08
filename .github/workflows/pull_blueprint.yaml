@@ -19,14 +19,14 @@ jobs:
             --compression=auto \
             --post-data='["${{ github.event.inputs.NAME }}"]' \
             --output-document=exportJob.json \
-            https://sam-dev-demo.dev.logik.io/api/admin/v1/bulk/blueprints/export
+            ${{ vars.LOGIK_SOURCE_URL }}api/admin/v1/bulk/blueprints/export
 
       - name: get_job_id
         id: get_job_id
         run: echo "JOB_ID=$(jq .id exportJob.json)" >> $GITHUB_OUTPUT
       - name: generate_export_url
         id: generate_export_url
-        run: echo "EXPORT_URL=https://sam-dev-demo.dev.logik.io/api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
+        run: echo "EXPORT_URL=${{ vars.LOGIK_SOURCE_URL }}api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
       - name: Sleep for 30 seconds
         uses: jakejarvis/wait-action@master
         with:
