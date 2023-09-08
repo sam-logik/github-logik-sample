@@ -3,19 +3,22 @@ on:
   workflow_dispatch:
     inputs:
       NAME:
-        description: "Blueprint Variable Name"
+        description: "Blueprint Variable Name [Folder in repo]"
         type: string
 jobs:
   To-Zip:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v3
 
       - name: Create Zip
-        # run: cd ${{ github.event.inputs.NAME }} && zip -r -q ../bp.zip *
+        id: zip
         run: zip -r bp.zip ${{ github.event.inputs.NAME }}
+  
       - name: Upload Blueprint
+        id: upload_blueprint
         run: |
           curl ${{ env.LOGIK_DEST_URL }}api/admin/v2/uploadFile \
           -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }}' \
