@@ -23,4 +23,4 @@ jobs:
           curl ${{ vars.LOGIK_DEST_URL }}api/admin/v2/uploadFile \
           -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }}' \
           -F 'jobType=GENERIC_IMPORT' \
-          -F 'file=@bp.zip'
+          -F 'file=${{ github.event.inputs.NAME }}/@bp.zip'
