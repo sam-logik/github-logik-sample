@@ -13,7 +13,6 @@ blueprints:
   - fG21
   - fG31
   - fg1header_sc
-  - hidden_sc
   - fg2header_sc
   lastModifiedBy: provisioning@logik.io.samdemo
   name: fg_sc
