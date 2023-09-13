@@ -1,4 +1,4 @@
-name: Logik - Pull Blueprint
+name: Logik - Get Job Info
 on:
   workflow_dispatch:
     inputs:
