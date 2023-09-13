@@ -1,2 +1,9 @@
+# MacOS
+.DS_STORE
+
+# Env and secrets
 *.env
 *.secrets
+
+# Misc Zips
+*.zip
