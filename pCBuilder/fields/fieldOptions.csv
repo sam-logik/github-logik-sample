@@ -1,9 +1,0 @@
-variableName,name,value,defaultValue,description,imageUrl,optionGroup,order
-pleExtension,Single Socket Motherboard,SSM,true,Supports one (1) processor and a maximum of 4 RAM Modules,,,10
-pleExtension,Dual Socket Motherboard,DSM,false,Supports two (2) processors and a maximum of 8 RAM modules,,,20
-cPUType,All,All,true,,,,5
-cPUType,Low,Low,false,,,,7
-cPUType,Mid,Mid,false,,,,8
-cPUType,High,High,false,,,,9
-hidden_sc,yes,true,false,,,,
-hidden_sc,no,false,false,,,,
