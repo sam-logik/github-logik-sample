@@ -1,6 +1,6 @@
 # Logik Version Control and Backup Example
 
-Example support for pulling and pushing of data to and from different Logik environments
+Example support for pulling and pushing of data to and from different Logik environments. This is provided as is, with no warranty or specifc support.
 
 - Blueprints
 
