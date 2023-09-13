@@ -32,12 +32,12 @@ Manually triggering
 
 #### Pull Actions
 
-Each pull action will export the current data of either the blueprint and create a branch with the new data. The new branch can be compared with the main branch and merged in if desired.
+The pull action will export the current data of the blueprint and create a branch with the new data. The new branch can be compared with the main branch and merged in if desired.
 
 - [Blueprint Pull](.github/workflows/blueprint_pull.yaml)
 
 #### Push Actions
 
-Each push action will create a zip file of either the blueprint from the main branch and start an import job in the destination environment.
+The push action will create a zip file of the blueprint from the main branch and start an import job in the destination environment.
 
 - [Blueprint Push](.github/workflows/blueprint_push.yaml)
