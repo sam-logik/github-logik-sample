@@ -1,0 +1,22 @@
+name: Logik - Pull Blueprint
+on:
+  workflow_dispatch:
+    inputs:
+      JOBID:
+        description: "JobId"
+        type: string
+      ENV:
+        description: "SOURCE or DEST"
+        type: string
+jobs:
+  get_job_info:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Get vars
+      #   id: get_vars
+      #   run:  echo "URL=${{ vars.LOGIK_SOURCE_URL }}api/admin/v2/bulk/export/${{ steps.get_job_id.outputs.JOB_ID }}" >> $GITHUB_OUTPUT
+      - name: Poll Job Status
+        id: poll_job
+        run: |
+          curl ${{ vars.LOGIK_DEST_URL }}/api/admin/v1/job/${{ github.event.inputs.JOBID }} \
+          -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }} | jq .status'
