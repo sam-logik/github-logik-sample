@@ -16,12 +16,11 @@ jobs:
       - name: Create Zip
         id: zip
         run: zip -r bp.zip ${{ github.event.inputs.NAME }}
-  
+
       - name: Upload Blueprint
         id: upload_blueprint
         run: |
-          curl ${{ env.LOGIK_DEST_URL }}api/admin/v2/uploadFile \
+          curl ${{ vars.LOGIK_DEST_URL }}api/admin/v2/uploadFile \
           -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }}' \
           -F 'jobType=GENERIC_IMPORT' \
           -F 'file=@bp.zip'
-
