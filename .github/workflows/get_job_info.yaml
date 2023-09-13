@@ -18,5 +18,5 @@ jobs:
       - name: Poll Job Status
         id: poll_job
         run: |
-          curl ${{ vars.LOGIK_DEST_URL }}/api/admin/v1/job/${{ github.event.inputs.JOBID }} \
+          curl ${{ vars.LOGIK_DEST_URL }}api/admin/v1/job/${{ github.event.inputs.JOBID }} \
           -H 'Authorization: Bearer ${{ secrets.LOGIK_DEST_API }}'
