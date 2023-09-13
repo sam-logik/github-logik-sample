@@ -15,7 +15,7 @@ jobs:
 
       - name: Create Zip
         id: zip
-        run: cd ${{ github.event.inputs.NAME }}/ && zip -r bp.zip 
+        run: cd ${{ github.event.inputs.NAME }}/ && zip -r bp.zip *
 
       - name: Upload Blueprint
         id: upload_blueprint
