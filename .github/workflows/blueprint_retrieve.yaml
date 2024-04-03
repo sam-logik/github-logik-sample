@@ -1,0 +1,39 @@
+name: Logik - Retrieve Blueprint
+on:
+  workflow_dispatch:
+    inputs:
+      NAME:
+        description: "Blueprint Variable Name"
+        type: string
+jobs:
+  pull_and_commit_blueprint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Current Time
+        id: now
+        run: echo "NOW=$(date +'%Y-%m-%dT%H.%M.%S')" >> $GITHUB_OUTPUT
+
+      - name: Set Env Variables
+        id: set_env
+        run: |
+          echo "LOGIK_TOKEN=${{ secrets.LOGIK_SOURCE_API }}" >> $GITHUB_ENV
+          echo "LOGIK_URL=${{ vars.LOGIK_SOURCE_URL }}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Export and Download Blueprint
+        id: export_download_blueprint
+        run: |
+          bash ./scripts/export-bp ${{ github.event.inputs.NAME }}
+
+      - name: Extract Blueprint
+        id: extract_blueprint
+        run: mkdir -p ${{ github.event.inputs.NAME }} && unzip -o export.zip -d ${{ github.event.inputs.NAME }}
+
+      - name: Add and Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "${{ github.event.inputs.NAME }}"
+          message: "Blueprint ${{ github.event.inputs.NAME }}"
+          new_branch: "${{ github.event.inputs.NAME }}-${{ steps.now.outputs.NOW}}"
