@@ -5,9 +5,11 @@ blueprints:
   - cPUType
   - textTest_swc
   - endDate
+  - newBool
   - pleExtension
   - hidden_sc
   - startDate
+  - simpleBool
   lastModifiedBy: provisioning@logik.io.samdemo
   name: PC Builder
   description: null
