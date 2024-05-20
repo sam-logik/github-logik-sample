@@ -1,0 +1,7 @@
+field_type,name,variableName,required,description,selectType,minValue,maxValue,stepValue,defaultValue,precision,unitLabel,minLength,maxLength,lastModifiedBy,quantitySelectionLinked,enrichEnabled,defaultType,defaultBomType,defaultParentProduct,defaultUom,defaultPricingProductSellingModelId,defaultPricingStartDate,defaultPricingEndDate,picklistOptionType
+PicklistField,Motherboard Selection,pleExtension,true,,single,,,,,,,,,provisioning@logik.io.samdemo,,,,,,,,,,TEXT
+PicklistField,CPU Type,cPUType,false,,single,,,,,,,,,gh_test (API),,,,,,,,,,TEXT
+TextField,endDate,endDate,false,,,,,,,,,,,gh_test (API),,,,,,,,,,
+TextField,startDate,startDate,false,,,,,,,,,,,gh_test (API),,,,,,,,,,
+BooleanField,hidden_sc,hidden_sc,false,,,,,,false,,,,,gh_test (API),,,,,,,,,,
+TextField,textTest_swc,textTest_swc,false,,,,,,,,,,,gh_test (API),,,,,,,,,,
