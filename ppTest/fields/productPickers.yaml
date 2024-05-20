@@ -1,0 +1,12 @@
+---
+- variableName: megaPP
+  fields:
+  - variableName: megaPP.value
+    target: ProductId
+  - variableName: megaPP.select
+  - variableName: megaPP.quantity
+    target: ProductQuantity
+    aggregates:
+    - variableName: megaPP.aggregates.quantity_average
+      name: Quantity Average
+      aggregateType: AVERAGE

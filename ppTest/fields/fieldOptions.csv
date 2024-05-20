@@ -1,0 +1,5 @@
+variableName,name,value,defaultValue,description,imageUrl,optionGroup,order
+simpleBool,true,true,false,,,,
+simpleBool,false,false,false,,,,
+megaPP,alpha,alpha,false,,,,10
+megaPP,beta,beta,false,,,,20
