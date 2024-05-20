@@ -1,0 +1,6 @@
+field_type,name,variableName,required,description,selectType,minValue,maxValue,stepValue,defaultValue,precision,unitLabel,minLength,maxLength,lastModifiedBy,quantitySelectionLinked,enrichEnabled,defaultType,defaultBomType,defaultParentProduct,defaultUom,defaultPricingProductSellingModelId,defaultPricingStartDate,defaultPricingEndDate,picklistOptionType
+ProductPicker,megaPP,megaPP,false,,multi,,,,,,,,,provisioning@logik.io.samdemo,false,false,,,,,,,,TEXT
+TextField,Value,megaPP.value,false,,,,,,,,,,,,,,,,,,,,,
+BooleanField,Select,megaPP.select,false,,,,,,false,,,,,,,,,,,,,,,
+NumberField,Quantity,megaPP.quantity,false,,,,,,,32,,,,,,,,,,,,,,
+BooleanField,simpleBool,simpleBool,false,,,,,,true,,,,,provisioning@logik.io.samdemo,,,,,,,,,,
